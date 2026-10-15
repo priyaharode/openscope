@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #F9FAF7;
+    --bg-surface: #FFFFFF;
+    --bg-surface-subtle: #F3F5F0;
+    --bg-surface-hover: #ECF0E8;
+    
+    --sage-50: #F4F7F3;
+    --sage-100: #E6EDE4;
+    --sage-200: #D0DEC9;
+    --sage-300: #ABC4A1;
+    --sage-400: #7FA373;
+    --sage-500: #577F4D;
+    --sage-600: #42643A;
+    --sage-700: #354E2F;
+    --sage-800: #2C3E28;
+    --sage-900: #1C2819;
+
+    --border-light: #E4E8DF;
+    --border-subtle: #D5DCD0;
+    --text-primary: #1C241D;
+    --text-secondary: #586359;
+    --text-muted: #849085;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D2D8CB;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B5BFA9;
+}
+
+.font-editorial {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}

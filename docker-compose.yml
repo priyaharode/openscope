@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # OpenScope Core Dashboard & Intelligence Service
+  openscope-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openscope-dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://openscope:openscope_secret@postgres:5432/openscope
+      - OPENALEX_EMAIL=researcher@openscope.org
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - openscope-network
+
+  # PostgreSQL Relational Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: openscope-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=openscope
+      - POSTGRES_PASSWORD=openscope_secret
+      - POSTGRES_DB=openscope
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openscope -d openscope"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - openscope-network
+
+  # Chroma Vector Database (for Sentence Transformers & Embedding Search)
+  chroma-vector:
+    image: chromadb/chroma:latest
+    container_name: openscope-chroma
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    networks:
+      - openscope-network
+
+networks:
+  openscope-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  chroma_data:

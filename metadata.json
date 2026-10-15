@@ -1,0 +1,6 @@
+{
+  "name": "OpenScope",
+  "description": "Open-source research intelligence dashboard for exploring topics, entities, timelines, and knowledge graphs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
